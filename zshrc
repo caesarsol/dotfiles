@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/accurat_cesare/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="flak"
 
@@ -57,8 +57,8 @@ source $ZSH/oh-my-zsh.sh
 setopt no_inc_append_history append_history no_share_history hist_save_no_dups
 
 # This loads nvm
-export NVM_DIR="/Users/accurat_cesare/.nvm"
-source "$NVM_DIR/nvm.sh"
+export NVM_DIR="$HOME/.nvm"
+source "/usr/local/opt/nvm/nvm.sh"
 
 export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
 

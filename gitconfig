@@ -2,7 +2,7 @@
 	name = cesare.soldini
 	email = cesare.soldini@accurat.it
 [core]
-	excludesfile = /Users/accurat_cesare/.gitignore_global
+	excludesfile = ~/.gitignore_global
   editor = subl --new-window --wait
   pager =
 [diff]
@@ -23,9 +23,9 @@
   trustExitCode = false
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
+	path = 
 [mergetool "sourcetree"]
-	cmd = /opt/homebrew-cask/Caskroom/sourcetree/2.2.4/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 
 [alias]
