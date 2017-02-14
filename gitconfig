@@ -1,0 +1,66 @@
+[user]
+	name = cesare.soldini
+	email = cesare.soldini@accurat.it
+[core]
+	excludesfile = /Users/accurat_cesare/.gitignore_global
+  editor = subl --new-window --wait
+  pager =
+[diff]
+  tool = sublimetext
+[merge]
+  tool = sublimetext
+  ff = false
+  edit = false
+[push]
+  default = simple
+[pull]
+  rebase = true
+
+[difftool "sublimetext"]
+  cmd = subl --new-window --wait \"$REMOTE\" \"$LOCAL\" --command 'sublimerge_diff_views {"left_read_only": true, "right_read_only": true}'
+[mergetool "sublimetext"]
+  cmd = subl --new-window --wait \"$REMOTE\" \"$BASE\" \"$LOCAL\" \"$MERGED\" --command 'sublimerge_diff_views'
+  trustExitCode = false
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /opt/homebrew-cask/Caskroom/sourcetree/2.2.4/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+[alias]
+  echo = "! echo"
+  cfg = ! subl -n ~/.gitconfig
+  co = checkout
+  br = checkout -b
+  branches = branch -vv
+  bra = ! git for-each-ref --format='%(color:yellow)%(refname:short) %(color:blue)%(upstream)%(color:reset)' --sort=-upstream refs/heads | column -t
+  st = status --branch
+  ss = status --short --branch
+  stashall = stash --include-untracked
+  cur = rev-parse --abbrev-ref HEAD
+  cm = commit --verbose
+  cma = !"git add . && git commit --verbose"
+  mg = merge --no-edit --no-ff
+  ft = fetch --prune --progress
+  pl = pull --rebase
+  ps = push --set-upstream origin HEAD
+  pr = "! git ps && open https://github.com/$(git github-name)/compare/master...$(git cur)"
+  rb = rebase --autostash
+  up = !"git ft && git rb origin/master && ([ $(git cur) != 'master' ] && git fetch origin master:master)"
+  # up = !"git fetch --prune --progress && git fetch origin master:master && git rebase --autostash origin/master"
+  ms = "! git co master; git up; git gg;"
+  tg = "! f() { [ $1 ] || (echo "Usage: git tg TAGNAME" ; exit 1) ; git tag "$1"; git push --tags ; }; f"
+  ggg = log -n30 --graph --pretty=format:\"%>(10)%C(red)%h %C(green)(%ci) %C(blue)%an %C(reset)%s %C(yellow)%d\"
+  gg = log -n10 --graph --pretty=format:\"%>(10)%C(red)%h %C(green)(%cr) %C(blue)%an %C(reset)%s %C(yellow)%d\"
+  github-name = ! git config --get remote.origin.url | cut -d: -f2 | cut -d. -f1
+  untracked = ! git for-each-ref --format='%(refname:short) ::%(upstream)::' refs/heads | grep :::: | cut -f1 -d' '
+  unadd = "! f() { [ $1 ] || (echo "Usage: git unadd FILENAME" ; exit 1) ; git reset HEAD -- $1 ; }; f"
+  mergein = "! f() { [ $1 ] || (echo "Usage: git mergein FILENAME" ; exit 1) ; BRANCH="$(git cur)"; git co $1 && git mg $BRANCH; }; f"
+  rmbranch = "! f() { [ $1 ] || (echo "Usage: git rmbranch BRANCHNAME" ; exit 1) ; git branch -d $1 && git push origin --delete $1; }; f"
+  tidy = "! f() { [ $1 ] && (echo "Usage: git tidy" ; exit 1) ; git branches | grep ': gone]' | while read BRANCH_NAME REST; do git branch -d $BRANCH_NAME && echo '---'; done ; }; f"
+  common-ancestor = "! git name-rev --name-only $(git merge-base origin/master HEAD)"
+  reopen-last = reset --soft HEAD~1
+
+  # Delete master-merged branches from origin
+  #git branch -vv --remote --merged=origin/master | grep -v origin/master |  while read -r BRANCH COM MES; do BRANCH_NAME=$(echo $BRANCH | cut -d/ -f2-); echo $BRANCH_NAME; git push origin :$BRANCH_NAME; done
