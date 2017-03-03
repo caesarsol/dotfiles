@@ -43,12 +43,14 @@
   cma = !"git add . && git commit --verbose"
   mg = merge --no-edit --no-ff
   ft = fetch --prune --progress
+  ftm = fetch --prune --progress origin master:master
   pl = pull --rebase
   ps = push --set-upstream origin HEAD
   pr = "! git ps && open https://github.com/$(git github-name)/compare/master...$(git cur)"
+  psf = push --set-upstream --force origin HEAD
   rb = rebase --autostash
   up = !"git ft && git rb origin/master && ([ $(git cur) != 'master' ] && git fetch origin master:master)"
-  # up = !"git fetch --prune --progress && git fetch origin master:master && git rebase --autostash origin/master"
+  upm = !"git fetch --prune --progress && git fetch origin master:master && git rebase --autostash origin/master"
   ms = "! git co master; git up; git gg;"
   tg = "! f() { [ $1 ] || (echo "Usage: git tg TAGNAME" ; exit 1) ; git tag "$1"; git push --tags ; }; f"
   ggg = log -n30 --graph --pretty=format:\"%>(10)%C(red)%h %C(green)(%ci) %C(blue)%an %C(reset)%s %C(yellow)%d\"
