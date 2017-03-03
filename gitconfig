@@ -46,8 +46,10 @@
   ftm = fetch --prune --progress origin master:master
   pl = pull --rebase
   ps = push --set-upstream origin HEAD
-  pr = "! git ps && open https://github.com/$(git github-name)/compare/master...$(git cur)"
   psf = push --set-upstream --force origin HEAD
+  pr-github = "! open https://github.com/$(git github-name)/compare/master...$(git cur)"
+  pr-bitbucket = "! open \"https://bitbucket.org/accurat/ibm-qradar/pull-requests/new?source=$(git cur)&t=1\""
+  pr = "! git ps && git pr-$(git remote get-url origin | grep -oE '(bitbucket|github)')"
   rb = rebase --autostash
   up = !"git ft && git rb origin/master && ([ $(git cur) != 'master' ] && git fetch origin master:master)"
   upm = !"git fetch --prune --progress && git fetch origin master:master && git rebase --autostash origin/master"
