@@ -60,7 +60,7 @@ setopt no_inc_append_history append_history no_share_history hist_save_no_dups
 export NVM_DIR="$HOME/.nvm"
 source "/usr/local/opt/nvm/nvm.sh"
 
-export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
+export HOMEBREW_CASK_OPTS="--appdir=~/Applications/"
 
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
