@@ -55,14 +55,14 @@
   upm = !"git fetch --prune --progress && git fetch origin master:master && git rebase --autostash origin/master"
   ms = "! git co master; git up; git gg;"
   tg = "! f() { [ $1 ] || (echo "Usage: git tg TAGNAME" ; exit 1) ; git tag "$1"; git push --tags ; }; f"
-  ggg = log -n30 --graph --pretty=format:\"%>(10)%C(red)%h %C(green)(%ci) %C(blue)%an %C(reset)%s %C(yellow)%d\"
-  gg = log -n10 --graph --pretty=format:\"%>(10)%C(red)%h %C(green)(%cr) %C(blue)%an %C(reset)%s %C(yellow)%d\"
+  ggg = log -n30 --graph --pretty=format:\"%>(10)%C(red)%h %C(green)(%ad) %C(blue)%an %C(reset)%s %C(yellow)%d\" --date=format-local:'%Y-%m-%d %H:%M'
+  gg = log -n10 --graph --pretty=format:\"%>(10)%C(red)%h %C(green)(%ad) %C(blue)%an %C(reset)%s %C(yellow)%d\" --date=format-local:'%Y-%m-%d %H:%M'
   github-name = ! git config --get remote.origin.url | cut -d: -f2 | cut -d. -f1
   untracked = ! git for-each-ref --format='%(refname:short) ::%(upstream)::' refs/heads | grep :::: | cut -f1 -d' '
   unadd = "! f() { [ $1 ] || (echo "Usage: git unadd FILENAME" ; exit 1) ; git reset HEAD -- $1 ; }; f"
   mergein = "! f() { [ $1 ] || (echo "Usage: git mergein FILENAME" ; exit 1) ; BRANCH="$(git cur)"; git co $1 && git mg $BRANCH; }; f"
   rmbranch = "! f() { [ $1 ] || (echo "Usage: git rmbranch BRANCHNAME" ; exit 1) ; git branch -d $1 && git push origin --delete $1; }; f"
-  tidy = "! f() { [ $1 ] && (echo "Usage: git tidy" ; exit 1) ; git branches | grep ': gone]' | while read BRANCH_NAME REST; do git branch -d $BRANCH_NAME && echo '---'; done ; }; f"
+  tidy = "! f() { [ $1 ] && (echo "Usage: git tidy" ; exit 1) ; git branches | grep ': gone]' | tr -d '*' | while read BRANCH_NAME REST; do git branch -d \"$BRANCH_NAME\" && echo '---'; done ; }; f"
   common-ancestor = "! git name-rev --name-only $(git merge-base origin/master HEAD)"
   reopen-last = reset --soft HEAD~1
 
